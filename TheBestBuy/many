@@ -1,0 +1,28 @@
+package test;
+
+import java.util.Scanner;
+
+public class Many {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		String str = "";
+		str = sc.nextLine(); // 读入数组中所有元素；
+
+		String arr[] = str.split(" "); // 用空格分割字符串
+		int n = arr.length;
+		int arra[] = new int[n];
+		for (int i = 0; i < arra.length; i++) {
+			arra[i] = Integer.parseInt(arr[i]);
+			// System.out.print(arra[i] + " ");
+		} // 将字符串转化为整数数组
+
+		int max = 0;    // 盈利最大
+		for (int i = 0; i < arra.length - 1; i++) {
+			int t = arra[i+1] - arra[i];
+			if(t > 0) max += t;
+		}
+		System.out.println(max);
+	}
+
+}
