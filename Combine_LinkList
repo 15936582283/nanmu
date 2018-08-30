@@ -1,0 +1,81 @@
+#include<iostream>
+
+using namespace std;
+
+typedef struct LNode {
+	int date;
+	struct LNode *next;
+}LNode, *LinkList;
+int CreatList_R(LinkList &L) {        //创建单链表
+	L = new LNode;
+	L->next = NULL;
+	LinkList r = L;
+
+	char c;
+	int n = 0;
+
+	while (true)
+	{
+		cin >> c;
+		if (!isdigit(c)) break;
+		LinkList p = new LNode;
+		p->next = NULL;
+		p->date = (int)(c - '0');
+		r->next = p;
+		r = p;
+		n++;
+	}
+	return n;
+}
+int LinkInster(LinkList &L, int i,int e) {        // 插入
+	LinkList p = L;
+	int j = 0;
+	while (p && (j < i - 1)) 
+	{
+		p = p->next;
+		++j;
+	}
+	if (!p || j > i - 1) return -1;
+	LinkList s = new LNode;
+	s->date = e;
+	s->next = p->next;
+	p->next = s;
+	return 1;
+}
+int GetElem(LinkList L, int i) {    //取值
+	LinkList p = L->next; int j = 1;
+	while (p && j < i) {
+		p = p->next;
+		++j;
+	}
+	if (!p || j > i) return -1;
+	return p->date;
+}
+int main() {
+	LinkList L1, L2;
+
+	int n1 = CreatList_R(L1);
+	int n2 = CreatList_R(L2);
+	int c = 1;
+	for (int i = 1; i <= n1; i++)
+	{
+		if (i > n2) break;
+		int n = GetElem(L2, i);
+		LinkInster(L1, i + c, n);
+		c++;
+	}
+	if (n2 > n1) {
+		while (c > n2) {
+			int n = GetElem(L2, c);
+			LinkInster(L1, n1 + c, n);
+			c++;
+		}
+	}
+	for (int i = 1; i < n1 + n2; i++)
+	{
+		cout << GetElem(L1, i) << "->";
+	}
+	cout << GetElem(L1, n1+n2) << endl;
+
+	return 0;
+}
