@@ -1,0 +1,43 @@
+//  寻找无重复最长子字符串
+
+public class te{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		String str = sc.nextLine();
+		String st = "";
+		int max, length, slen;         // max 当前最大子串， length 当前子串长度， slen 字符串总长 
+		int[] sm = new int[26];        // 代表26个字母
+		
+		max = 0;
+		length = 0;
+		slen = 0;
+		char carr[] = str.toCharArray();
+		slen = str.length();
+		deassign(sm);
+		for (int i = 0; i < slen; i++) {
+			char ch = carr[i];
+			int te = (int)(ch - 'a');
+			//System.out.println(te);
+			if(sm[te] != 0) {
+				if(length > max) {
+					max = length;
+					st = str.substring(i-length, i);   // 当前最大子串
+				}
+				deassign(sm);         // 重置数组
+				length = 1;            // 寻找下一子串
+				continue;
+			}
+			sm[te] = 1;
+			length ++;
+		}
+		System.out.println(max + " ------- " + st);
+	}
+	
+	static void deassign(int[] array) {           //重置数组中的值
+		int len = array.length;
+		for (int i = 0; i < len; i++) {
+			array[i] = 0;
+		}
+	}
+}
