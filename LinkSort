@@ -1,0 +1,90 @@
+/* 在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+示例 1:
+输入: 4->2->1->3
+输出: 1->2->3->4
+示例 2:
+输入: -1->5->3->4->0
+输出: -1->0->3->4->5 
+*/
+
+#include<iostream>
+//#include<cstdio>
+#include<string>
+
+using namespace std;
+typedef struct LNode {
+	int date;
+	struct LNode *next;
+}LNode, *LinkList;
+int CreateList_H(LinkList &L) {     //  创建链表
+	L = new LNode;
+	L->next = NULL;
+	LinkList r = L;
+	int t = 0;
+	for ( ;  ; )
+	{
+		LinkList p = new LNode;
+		char ch[2];
+		cin >> ch;
+		if((!isdigit(ch[0]) && (isdigit(ch[1]))) || isdigit(ch[0])) {
+			if(isdigit(ch[0]))
+				p->date = ch[0] - '0';
+			else p->date = 0-(ch[1] - '0');	
+			p->next = NULL;
+			r->next = p;
+			r = p;
+			t++;
+		} else break;
+		//if (!isdigit(ch)) break;
+		
+	}
+	return t;
+}
+int GetELem(LinkList L, int i) {   // 取值
+	LinkList r = L->next;
+	int j = 1;
+	while (r && j < i)
+	{
+		r = r->next;
+		++j;
+	}
+	return r->date;
+}
+void ChangeElem(LinkList &L, int i, int e) {      // 修改值
+	LinkList r = L->next;
+	int j = 1;
+	while (r && j < i)
+	{
+		r = r->next;
+		++j;
+	}
+	r->date = e;
+}
+int main() {
+	LinkList L;
+
+	int n = CreateList_H(L);
+	//cout << n << endl;
+	for (int i = 0; i < n - 1; i++)
+	{
+		
+		for (int j = 0; j < n-i-1; j++)
+		{
+			int te1 = GetELem(L, j+1);
+			int te2 = GetELem(L, j+2);
+			//cout <<te1<<" "<< te2 << endl;
+			if (te1 > te2) {
+				ChangeElem(L, j + 1, te2);
+				ChangeElem(L, j + 2, te1);
+			}
+			//te1 = te2;
+		}
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		cout << GetELem(L, i) << " ";
+	}
+	cout << endl;
+	return 0;
+}
