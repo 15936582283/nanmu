@@ -21,23 +21,15 @@ int CreateList_H(LinkList &L) {     //  创建链表
 	L->next = NULL;
 	LinkList r = L;
 	int t = 0;
-	for ( ;  ; )
-	{
+	int ch;
+	while(scanf("%d",&ch) == 1){        // 输入成功 返回 1 
 		LinkList p = new LNode;
-		char ch[2];
-		cin >> ch;
-		if((!isdigit(ch[0]) && (isdigit(ch[1]))) || isdigit(ch[0])) {
-			if(isdigit(ch[0]))
-				p->date = ch[0] - '0';
-			else p->date = 0-(ch[1] - '0');	
-			p->next = NULL;
-			r->next = p;
-			r = p;
-			t++;
-		} else break;
-		//if (!isdigit(ch)) break;
-		
-	}
+		p->date = ch;
+		p->next = NULL;
+		r->next = p;
+		r = p;
+		t++;
+	} 
 	return t;
 }
 int GetELem(LinkList L, int i) {   // 取值
